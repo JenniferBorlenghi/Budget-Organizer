@@ -1,0 +1,32 @@
+$title-font: "Lilita One", cursive;
+$body-font: "Roboto", sans-serif;
+
+$text-color: #34343a;
+$primary-color: #10403b;
+$secondary-color: #4c5958;
+$table-first-row-color: rgba(46, 124, 116, 30%);
+$table-rows-color: rgba(139, 188, 183, 30%);
+$add-color: #123373;
+$title-color: #158377;
+$danger-color: #851f1f;
+$warning-color: #c2a439;
+$success-color: #1c6441;
+$background-color: #bfbfbf;
+
+@mixin breakpoint($min-width) {
+  @media only screen and (min-width: $min-width) {
+    @content;
+  }
+}
+
+@mixin breakpoint-small {
+  @include breakpoint(600px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-large {
+  @include breakpoint(1200px) {
+    @content;
+  }
+}
