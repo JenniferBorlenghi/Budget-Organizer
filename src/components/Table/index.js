@@ -7,53 +7,54 @@ import {
   removeTransaction,
   editTransaction,
 } from "../../redux/transactionSlice";
-import NotFoundPage from "./../../pages/NotFoundPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categoryOptions } from "../../includes/categories";
+import { CADFormat } from "../../includes/currencyFormat";
 
-export default function Table({ isEditing }) {
+export default function Table({ currentTransaction }) {
   const transactions = useSelector((state) => state.transaction.transactions);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const transaction = useSelector((state) =>
-    state.transaction.transactions.find(
-      (transaction) => transaction.id === isEditing
-    )
-  );
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [amount, setAmount] = useState("");
+  const [date, setDate] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [description, setDescription] = useState(
-    transaction ? transaction.description : ""
-  );
-  const [category, setCategory] = useState(
-    transaction ? transaction.category : ""
-  );
-  const [amount, setAmount] = useState(transaction ? transaction.amount : "");
-  const [date, setDate] = useState(transaction ? transaction.date : "");
-
-  // if the transation was not found through the id and it is edit mode
-  // return page not found
-  if (!transaction && isEditing) {
-    return <NotFoundPage />;
-  }
+  useEffect(() => {
+    setDescription(currentTransaction.description);
+    setCategory(currentTransaction.category);
+    setAmount(currentTransaction.amount);
+    setDate(currentTransaction.date);
+  }, [currentTransaction]);
 
   const handleEditTransaction = (id) => {
     navigate("/edit/" + id);
   };
-  console.log("id", isEditing);
 
   const handleRemoveTransaction = (id) => {
     dispatch(removeTransaction(id));
   };
 
   const handleUpdateTransaction = (id) => {
-    const newTransaction = { id, description, category, amount, date };
-    dispatch(editTransaction(newTransaction));
-    navigate("/transactions");
+    if (description === "" || category === "" || amount === "" || date === "") {
+      setErrorMessage("Please, fill out all fields!");
+    } else if (parseFloat(amount) < 0) {
+      setErrorMessage("Please, enter a positive amount!");
+    } else {
+      setErrorMessage("");
+      const newTransaction = { id, description, category, amount, date };
+      dispatch(editTransaction(newTransaction));
+      navigate("/transactions");
+    }
   };
 
   return (
     <div className="transaction-comp">
+      {errorMessage !== "" && (
+        <div className="error-message">{errorMessage}</div>
+      )}
       <table>
         <thead>
           <tr>
@@ -66,7 +67,7 @@ export default function Table({ isEditing }) {
         </thead>
         <tbody>
           {transactions.map((transaction) => {
-            if (isEditing && transaction.id === isEditing) {
+            if (currentTransaction.id === transaction.id) {
               return (
                 <tr key={transaction.id}>
                   <td>
@@ -123,11 +124,19 @@ export default function Table({ isEditing }) {
                 </tr>
               );
             } else {
+              const amountClass =
+                transaction.category === "Income" ||
+                transaction.category === "Leasing" ||
+                transaction.category === "Investments"
+                  ? "income-amount"
+                  : "expense-amount";
               return (
                 <tr key={transaction.id}>
                   <td>{transaction.description}</td>
                   <td>{transaction.category}</td>
-                  <td>{transaction.amount}</td>
+                  <td className={amountClass}>
+                    <p>{CADFormat.format(transaction.amount)}</p>
+                  </td>
                   <td>{transaction.date}</td>
                   <td>
                     <div className="action-column">

@@ -6,6 +6,11 @@
   justify-content: center;
   margin: 20px;
 
+  .error-message {
+    color: $danger-color;
+    margin-bottom: 10px;
+  }
+
   table {
     text-align: center;
     th {
@@ -16,8 +21,45 @@
 
     td {
       background-color: $table-rows-color;
-      padding: 15px;
-      margin-bottom: 5px;
+      padding: 10px;
+
+      input,
+      textarea,
+      select {
+        box-sizing: border-box;
+        width: 90%;
+        font-size: 16px;
+        padding: 8px;
+        color: $text-color;
+        border: solid 1px $background-color;
+        border-radius: 6px;
+        font-family: $body-font;
+      }
+    }
+
+    .income-amount {
+      p {
+        background-color: $success-color;
+        color: white;
+        padding: 3px;
+        border-radius: 6px;
+      }
+      p::before {
+        content: "+";
+      }
+    }
+
+    .expense-amount {
+      p {
+        background-color: $danger-color;
+        color: white;
+        padding: 3px;
+        border-radius: 6px;
+      }
+
+      p::before {
+        content: "-";
+      }
     }
 
     .action-column {

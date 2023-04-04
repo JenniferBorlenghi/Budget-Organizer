@@ -41,12 +41,12 @@ export const transactionSlice = createSlice({
     // edit
     editTransaction: (state, action) => {
       const currentTransaction = action.payload;
-      console.log("current", currentTransaction);
       const id = currentTransaction.id;
 
       state.transactions.forEach((transaction) => {
         if (transaction.id === id) {
           transaction.description = currentTransaction.description;
+          transaction.category = currentTransaction.category;
           transaction.amount = currentTransaction.amount;
           transaction.date = currentTransaction.date;
         }
