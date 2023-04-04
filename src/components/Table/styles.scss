@@ -1,0 +1,63 @@
+@import "./../../styles/variables.scss";
+
+.transaction-comp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px;
+
+  table {
+    text-align: center;
+    th {
+      background-color: $table-first-row-color;
+      padding: 15px;
+      margin-bottom: 5px;
+    }
+
+    td {
+      background-color: $table-rows-color;
+      padding: 15px;
+      margin-bottom: 5px;
+    }
+
+    td.action-column {
+      text-align: center;
+      svg {
+        color: $text-color;
+        font-size: 25px;
+        cursor: pointer;
+        // margin-right: 10px;
+      }
+
+      button {
+        border: none;
+        background-color: rgba(222, 235, 234, 1);
+        cursor: pointer;
+        margin-left: 25px;
+
+        svg {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+
+  h3 {
+    font-size: 18px;
+    align-self: flex-end;
+    margin-top: 15px;
+
+    .positive-sum {
+      color: $success-color;
+    }
+    .positive-sum::before {
+      content: "+";
+    }
+    .negative-sum {
+      color: $danger-color;
+    }
+    .negative-sum::before {
+      content: "-";
+    }
+  }
+}

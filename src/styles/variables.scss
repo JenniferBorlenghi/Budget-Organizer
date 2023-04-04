@@ -12,6 +12,7 @@ $danger-color: #851f1f;
 $warning-color: #c2a439;
 $success-color: #1c6441;
 $background-color: #bfbfbf;
+$add-button-color: #123373;
 
 @mixin breakpoint($min-width) {
   @media only screen and (min-width: $min-width) {
