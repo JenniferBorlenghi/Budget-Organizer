@@ -1,30 +1,56 @@
 @import "./../../styles/variables.scss";
 
 main.page {
-  .add-button {
-    background-color: $add-button-color;
-    border: none;
-    cursor: pointer;
-    color: white;
-    padding: 10px;
-    border-radius: 12px;
-    width: 18%;
-    font-weight: bold;
+  .transactions-page {
     display: flex;
-    font-size: 16px;
-    justify-content: center;
-    align-items: center;
-    position: sticky;
-    bottom: 0;
+    flex-direction: column;
 
-    svg {
-      font-size: 25px;
-      margin-bottom: 3px;
-      align-self: center;
+    .add-button {
+      background-color: $add-button-color;
+      border: none;
+      cursor: pointer;
+      color: white;
+      padding: 10px;
+      border-radius: 12px;
+      width: 18%;
+      font-weight: bold;
+      display: flex;
+      font-size: 16px;
+      justify-content: center;
+      align-items: center;
+      position: sticky;
+      bottom: 0;
+      margin-left: -10px;
+
+      svg {
+        font-size: 25px;
+        margin-bottom: 3px;
+        align-self: center;
+      }
+
+      &:hover {
+        background-color: #29529f;
+      }
     }
 
-    &:hover {
-      background-color: #29529f;
+    h3 {
+      font-size: 18px;
+      align-self: flex-end;
+
+      margin-right: 20px;
+
+      .positive-sum {
+        color: $success-color;
+      }
+      .positive-sum::before {
+        content: "+";
+      }
+      .negative-sum {
+        color: $danger-color;
+      }
+      .negative-sum::before {
+        content: "-";
+      }
     }
   }
 }
