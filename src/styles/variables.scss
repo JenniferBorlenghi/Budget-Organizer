@@ -31,3 +31,18 @@ $add-button-color: #123373;
     @content;
   }
 }
+
+@mixin form-elements-style {
+  input,
+  textarea,
+  select {
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    color: $text-color;
+    border: solid 1px $background-color;
+    border-radius: 6px;
+    font-family: $body-font;
+  }
+}

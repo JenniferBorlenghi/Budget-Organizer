@@ -10,26 +10,29 @@ export const transactionSlice = createSlice({
         description: "Rent",
         category: "Housing",
         amount: 1700,
-        date: Date.now(),
+        date: "2023-01-10",
       },
       {
         id: uuidv4(),
         description: "Costco",
         category: "Groceries",
         amount: 450,
-        date: Date.now(),
+        date: "2023-02-02",
       },
       {
         id: uuidv4(),
         description: "Salary",
-        category: "Income",
+        category: "Salary",
         amount: 4800,
-        date: Date.now(),
+        date: "2023-03-03",
       },
     ],
   },
   reducers: {
-    // delete
+    addTransaction: (state, action) => {
+      state.transactions.push(action.payload);
+    },
+
     removeTransaction: (state, action) => {
       const id = action.payload;
       const updatedTransactions = state.transactions.filter(
@@ -38,7 +41,6 @@ export const transactionSlice = createSlice({
       state.transactions = updatedTransactions;
     },
 
-    // edit
     editTransaction: (state, action) => {
       const currentTransaction = action.payload;
       const id = currentTransaction.id;
@@ -55,6 +57,7 @@ export const transactionSlice = createSlice({
   },
 });
 
-export const { removeTransaction, editTransaction } = transactionSlice.actions;
+export const { addTransaction, removeTransaction, editTransaction } =
+  transactionSlice.actions;
 
 export default transactionSlice.reducer;

@@ -23,18 +23,7 @@
       background-color: $table-rows-color;
       padding: 10px;
 
-      input,
-      textarea,
-      select {
-        box-sizing: border-box;
-        width: 90%;
-        font-size: 16px;
-        padding: 8px;
-        color: $text-color;
-        border: solid 1px $background-color;
-        border-radius: 6px;
-        font-family: $body-font;
-      }
+      @include form-elements-style();
     }
 
     .income-amount {

@@ -1,5 +1,4 @@
 import "./styles.scss";
-import { useNavigate } from "react-router-dom";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdOutlineEditNote } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,58 +6,65 @@ import {
   removeTransaction,
   editTransaction,
 } from "../../redux/transactionSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { categoryOptions } from "../../includes/categories";
 import { CADFormat } from "../../includes/currencyFormat";
 
 export default function Table() {
   const transactions = useSelector((state) => state.transaction.transactions);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState("");
   const [transactionToEdit, setTransactionToEdit] = useState("");
 
-  // useEffect(() => {
-  //   setDescription(transactionToEdit.description);
-  //   setCategory(transactionToEdit.category);
-  //   setAmount(transactionToEdit.amount);
-  //   setDate(transactionToEdit.date);
-  // }, [transactionToEdit]);
-
   const handleEditTransaction = (currentTransaction) => {
-    console.log("current", currentTransaction);
     setTransactionToEdit(currentTransaction);
-    // setDescription(currentTransaction.description);
-    // setCategory(currentTransaction.category);
-    // setAmount(currentTransaction.amount);
-    // setDate(currentTransaction.date);
   };
 
   const handleRemoveTransaction = (id) => {
     dispatch(removeTransaction(id));
   };
 
-  const handleUpdateTransaction = (id) => {
-    // if (description === "" || category === "" || amount === "" || date === "") {
-    //   setErrorMessage("Please, fill out all fields!");
-    // } else if (parseFloat(amount) < 0) {
-    //   setErrorMessage("Please, enter a positive amount!");
-    // } else {
-    //   setErrorMessage("");
-    //   const newTransaction = { id, description, category, amount, date };
-    //   dispatch(editTransaction(newTransaction));
-    //   navigate("/transactions");
-    // }
+  const handleUpdateTransaction = (
+    id,
+    newDescription,
+    newCategory,
+    newAmount,
+    newDate
+  ) => {
+    if (
+      newDescription === "" ||
+      newCategory === "" ||
+      newAmount === "" ||
+      newDate === ""
+    ) {
+      setErrorMessage("Please, fill out all fields!");
+    } else if (parseFloat(newAmount) < 0) {
+      setErrorMessage("The amount must be positive and greater than zero.");
+    } else if (parseFloat(newAmount) === isNaN) {
+      setErrorMessage("The amount must be a number.");
+    } else {
+      setErrorMessage("");
+      const newTransaction = {
+        id,
+        description: newDescription,
+        category: newCategory,
+        amount: newAmount,
+        date: newDate,
+      };
+      dispatch(editTransaction(newTransaction));
+      setTransactionToEdit("");
+    }
   };
 
   const ViewMode = ({ transaction }) => {
     const amountClass =
-      transaction.category === "Income" ||
-      transaction.category === "Leasing" ||
+      transaction.category === "Savings" ||
+      transaction.category === "Salary" ||
       transaction.category === "Investments"
         ? "income-amount"
         : "expense-amount";
+
     return (
       <tr key={transaction.id}>
         <td>{transaction.description}</td>
@@ -89,7 +95,6 @@ export default function Table() {
     const [category, setCategory] = useState(transaction.category);
     const [amount, setAmount] = useState(transaction.amount);
     const [date, setDate] = useState(transaction.date);
-
     return (
       <tr key={transaction.id}>
         <td>
@@ -101,10 +106,10 @@ export default function Table() {
             required={true}
           />
         </td>
-        {/* <td>
+        <td>
           {" "}
           <select
-            value={transaction.category}
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">- Select -</option>
@@ -119,7 +124,7 @@ export default function Table() {
           <input
             type="number"
             onChange={(e) => setAmount(e.target.value)}
-            value={transaction.amount}
+            value={amount}
             maxLength={8}
             required={true}
           />
@@ -128,25 +133,43 @@ export default function Table() {
           <input
             type="date"
             onChange={(e) => setDate(e.target.value)}
-            value={transaction.date}
+            value={date}
             maxLength={50}
             required={true}
           />
         </td>
         <td className="action-save-column">
           <div className="save-column">
-            <button onClick={() => handleUpdateTransaction(transaction.id)}>
+            <button
+              onClick={() =>
+                handleUpdateTransaction(
+                  transaction.id,
+                  description,
+                  category,
+                  amount,
+                  date
+                )
+              }
+            >
               <MdOutlineEditNote />
               <span>Save</span>
             </button>
           </div>
-        </td> */}
+        </td>
       </tr>
     );
   };
 
   const Transactions = () => {
-    const list = transactions.map((transaction) => {
+    // change the transactions to order it from the most recent to the most old date
+    const orderedTransactions = transactions.map((item) => ({
+      ...item,
+      dateObj: new Date(item.date),
+    }));
+
+    orderedTransactions.sort((a, b) => b.dateObj - a.dateObj);
+
+    const list = orderedTransactions.map((transaction) => {
       const isEditing = transactionToEdit.id === transaction.id;
       if (isEditing) {
         return <EditMode key={transaction.id} transaction={transaction} />;
@@ -161,80 +184,23 @@ export default function Table() {
       {errorMessage !== "" && (
         <div className="error-message">{errorMessage}</div>
       )}
-      <table>
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>{<Transactions />}</tbody>
-      </table>
+
+      {transactions.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>{<Transactions />}</tbody>
+        </table>
+      )}
+
+      {transactions.length === 0 && <div>No transactions yet!</div>}
     </div>
   );
 }
-
-// {transactionToEdit !== "" &&
-// transactions.map((transaction) => {
-//   if (transactionToEdit.id === transaction)
-//     return (
-//       <tr key={transaction.id}>
-//         <td>
-//           <input
-//             type="text"
-//             onChange={(e) => setDescription(e.target.value)}
-//             value={description}
-//             maxLength={50}
-//             required={true}
-//           />
-//         </td>
-//         <td>
-//           {" "}
-//           <select
-//             value={category}
-//             onChange={(e) => setCategory(e.target.value)}
-//           >
-//             <option value="">- Select -</option>
-//             {categoryOptions.map((cat) => (
-//               <option value={cat} key={cat}>
-//                 {cat}
-//               </option>
-//             ))}
-//           </select>
-//         </td>
-//         <td>
-//           <input
-//             type="number"
-//             onChange={(e) => setAmount(e.target.value)}
-//             value={amount}
-//             maxLength={8}
-//             required={true}
-//           />
-//         </td>
-//         <td>
-//           <input
-//             type="date"
-//             onChange={(e) => setDate(e.target.value)}
-//             value={date}
-//             maxLength={50}
-//             required={true}
-//           />
-//         </td>
-//         <td className="action-save-column">
-//           <div className="save-column">
-//             <button
-//               onClick={() =>
-//                 handleUpdateTransaction(transaction.id)
-//               }
-//             >
-//               <MdOutlineEditNote />
-//               <span>Save</span>
-//             </button>
-//           </div>
-//         </td>
-//       </tr>
-//     );
-// })}
