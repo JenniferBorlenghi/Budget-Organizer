@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import { categoryOptions } from "../../includes/categories";
 import { CADFormat } from "../../includes/currencyFormat";
+import { incomeTypes } from "../../includes/categories";
 
 export default function Table() {
   const transactions = useSelector((state) => state.transaction.transactions);
@@ -49,7 +50,7 @@ export default function Table() {
         id,
         description: newDescription,
         category: newCategory,
-        amount: newAmount,
+        amount: parseFloat(newAmount),
         date: newDate,
       };
       dispatch(editTransaction(newTransaction));
@@ -58,12 +59,9 @@ export default function Table() {
   };
 
   const ViewMode = ({ transaction }) => {
-    const amountClass =
-      transaction.category === "Savings" ||
-      transaction.category === "Salary" ||
-      transaction.category === "Investments"
-        ? "income-amount"
-        : "expense-amount";
+    const amountClass = incomeTypes.includes(transaction.category)
+      ? "income-amount"
+      : "expense-amount";
 
     return (
       <tr key={transaction.id}>

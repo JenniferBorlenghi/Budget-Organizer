@@ -5,23 +5,13 @@ import "./styles.scss";
 import { useSelector } from "react-redux";
 import { CADFormat } from "../../includes/currencyFormat";
 import { useNavigate } from "react-router-dom";
+import Summary from "./../../helperFunction/summary";
 
 export default function TransactionsPage() {
   const transactions = useSelector((state) => state.transaction.transactions);
   const navigate = useNavigate();
 
-  let summary = 0;
-  transactions.forEach((transaction) => {
-    if (
-      transaction.category === "Salary" ||
-      transaction.category === "Savings" ||
-      transaction.category === "Investments"
-    ) {
-      summary += parseFloat(transaction.amount);
-    } else {
-      summary -= parseFloat(transaction.amount);
-    }
-  });
+  const summary = Summary(transactions);
 
   const handleClickAddButton = () => {
     navigate("/add");

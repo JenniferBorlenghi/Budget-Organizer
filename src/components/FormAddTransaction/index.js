@@ -53,8 +53,6 @@ export default function FormAddTransaction() {
       setCategory("");
       setAmount("");
       setDate("");
-
-      console.log(data);
     }
   };
 

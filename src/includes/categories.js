@@ -6,7 +6,19 @@ export const categoryOptions = [
   "Personal",
   "Clothing",
   "Health",
-  "Savings",
+  "Leasing",
   "Salary",
-  "Investment",
+  "ROI",
 ];
+
+export const expenseTypes = [
+  "Housing",
+  "Utilities",
+  "Transportation",
+  "Groceries",
+  "Personal",
+  "Clothing",
+  "Health",
+];
+
+export const incomeTypes = ["Salary", "Savings", "ROI"];
