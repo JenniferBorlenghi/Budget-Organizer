@@ -6,6 +6,25 @@ main.page {
       display: flex;
       justify-content: space-between;
       margin: 15px;
+
+      @include form-elements-style;
+      flex-direction: row;
+      button {
+        @include save-button;
+        width: 20%;
+      }
+
+      margin-bottom: 20px;
+    }
+
+    .no-transactions {
+      margin: 15px;
+      margin-top: 25px;
+      text-align: center;
+
+      svg {
+        font-size: 25px;
+      }
     }
   }
 }

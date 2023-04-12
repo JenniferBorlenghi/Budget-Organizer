@@ -15,7 +15,7 @@ export const months = [
 
 export function getCurrentMonth(currentMonthIndex) {
   const currentMonthName = months[currentMonthIndex];
-  console.log("month", currentMonthName);
+  return currentMonthName;
 }
 
 export function getYearsInDB(transactions) {
