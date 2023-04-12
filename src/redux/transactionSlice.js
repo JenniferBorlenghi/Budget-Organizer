@@ -10,21 +10,21 @@ export const transactionSlice = createSlice({
         description: "Rent",
         category: "Housing",
         amount: 1700,
-        date: "2023-01-10",
+        date: "2023-04-10",
       },
       {
         id: uuidv4(),
         description: "Costco",
         category: "Groceries",
         amount: 450,
-        date: "2023-02-02",
+        date: "2023-04-02",
       },
       {
         id: uuidv4(),
         description: "Salary",
         category: "Salary",
         amount: 4800,
-        date: "2023-03-03",
+        date: "2023-04-03",
       },
     ],
   },
@@ -54,10 +54,18 @@ export const transactionSlice = createSlice({
         }
       });
     },
+
+    setTransactions: (state, action) => {
+      state.transactions = action.payload;
+    },
   },
 });
 
-export const { addTransaction, removeTransaction, editTransaction } =
-  transactionSlice.actions;
+export const {
+  addTransaction,
+  removeTransaction,
+  editTransaction,
+  setTransactions,
+} = transactionSlice.actions;
 
 export default transactionSlice.reducer;
