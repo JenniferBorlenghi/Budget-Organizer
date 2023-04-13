@@ -60,7 +60,7 @@ function App() {
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/transactions" element={<TransactionsPage />} />
-          <Route path="/add" element={<AddTransactionPage />} />
+          <Route path="/transactions/add" element={<AddTransactionPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

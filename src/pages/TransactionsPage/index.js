@@ -14,7 +14,7 @@ export default function TransactionsPage() {
   const summary = Summary(transactions);
 
   const handleClickAddButton = () => {
-    navigate("/add");
+    navigate("/transactions/add");
   };
 
   const summaryClass = summary >= 0 ? "positive-sum" : "negative-sum";
