@@ -1,32 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 
 export const transactionSlice = createSlice({
   name: "transaction",
   initialState: {
-    transactions: [
-      {
-        id: uuidv4(),
-        description: "Rent",
-        category: "Housing",
-        amount: 1700,
-        date: "2023-04-10",
-      },
-      {
-        id: uuidv4(),
-        description: "Costco",
-        category: "Groceries",
-        amount: 450,
-        date: "2023-04-02",
-      },
-      {
-        id: uuidv4(),
-        description: "Salary",
-        category: "Salary",
-        amount: 4800,
-        date: "2023-04-03",
-      },
-    ],
+    transactions: [],
   },
   reducers: {
     addTransaction: (state, action) => {

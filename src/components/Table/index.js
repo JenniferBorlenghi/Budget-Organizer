@@ -5,11 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   removeTransaction,
   editTransaction,
+  setTransactions,
 } from "../../redux/transactionSlice";
 import { useState } from "react";
 import { categoryOptions } from "../../includes/categories";
 import { CADFormat } from "../../includes/currencyFormat";
 import { incomeTypes } from "../../includes/categories";
+import * as database from "./../../database";
+import ProcessingDB from "../ProcessingDB";
 
 export default function Table() {
   const transactions = useSelector((state) => state.transaction.transactions);
@@ -17,16 +20,31 @@ export default function Table() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [transactionToEdit, setTransactionToEdit] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleEditTransaction = (currentTransaction) => {
     setTransactionToEdit(currentTransaction);
   };
 
-  const handleRemoveTransaction = (id) => {
-    dispatch(removeTransaction(id));
+  const handleRemoveTransaction = async (id) => {
+    const confirmAction = window.confirm("Are you sure?");
+
+    if (confirmAction) {
+      // update backend
+      const removedTransaction = await database.remove(id);
+
+      if (removedTransaction) {
+        // update frontend
+        dispatch(removeTransaction(id));
+        setErrorMessage("");
+      } else {
+        alert("Failed to remove the transaction");
+        setErrorMessage("Failed to remove the transaction");
+      }
+    }
   };
 
-  const handleUpdateTransaction = (
+  const handleUpdateTransaction = async (
     id,
     newDescription,
     newCategory,
@@ -45,7 +63,8 @@ export default function Table() {
     } else if (parseFloat(newAmount) === isNaN) {
       setErrorMessage("The amount must be a number.");
     } else {
-      setErrorMessage("");
+      setIsSaving(true);
+
       const newTransaction = {
         id,
         description: newDescription,
@@ -53,8 +72,32 @@ export default function Table() {
         amount: parseFloat(newAmount),
         date: newDate,
       };
+
+      const data = {
+        description: newDescription,
+        category: newCategory,
+        amount: parseFloat(newAmount),
+        date: newDate,
+      };
+      // update the interface right away
       dispatch(editTransaction(newTransaction));
-      setTransactionToEdit("");
+
+      const transactionUpdated = await database.updateTransation(id, data);
+      if (!transactionUpdated) {
+        alert("Failed to update the transaction.");
+        setErrorMessage("Failed to update the transaction.");
+        // reload from database the data unedited
+        const transactions = await database.loadTransactions();
+        // set it in the interface
+        dispatch(setTransactions(transactions));
+        // set to view mode
+        setTransactionToEdit("");
+        setIsSaving(false);
+      } else {
+        setTransactionToEdit("");
+        setErrorMessage("");
+        setIsSaving(false);
+      }
     }
   };
 
@@ -168,7 +211,11 @@ export default function Table() {
     orderedTransactions.sort((a, b) => b.dateObj - a.dateObj);
 
     const list = orderedTransactions.map((transaction) => {
-      const isEditing = transactionToEdit.id === transaction.id;
+      let isEditing = false;
+      if (transactionToEdit !== 0) {
+        isEditing = transactionToEdit.id === transaction.id;
+      }
+
       if (isEditing) {
         return <EditMode key={transaction.id} transaction={transaction} />;
       }
@@ -176,6 +223,10 @@ export default function Table() {
     });
     return list;
   };
+
+  if (isSaving) {
+    return <ProcessingDB message="Saving..." />;
+  }
 
   return (
     <div className="transaction-comp">

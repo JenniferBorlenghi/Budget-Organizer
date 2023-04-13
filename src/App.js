@@ -22,7 +22,31 @@ function App() {
       const transactions = await database.loadTransactions();
       dispatch(setTransactions(transactions));
 
-      const settings = await database.loadTransactionsSettings();
+      const firebaseSettingsList = await database.loadTransactionsSettings();
+      let settings = {
+        id: null,
+        Salary: 0,
+      };
+      if (
+        Array.isArray(firebaseSettingsList) &&
+        firebaseSettingsList.length > 0
+      ) {
+        const firebaseSettings = firebaseSettingsList[0];
+        settings = {
+          id: firebaseSettings.id,
+          Housing: firebaseSettings.Housing,
+          Utilities: firebaseSettings.Utilities,
+          Transportation: firebaseSettings.Transportation,
+          Groceries: firebaseSettings.Groceries,
+          Personal: firebaseSettings.Personal,
+          Clothing: firebaseSettings.Clothing,
+          Health: firebaseSettings.Health,
+          Leasing: firebaseSettings.Leasing,
+          Salary: firebaseSettings.Salary,
+          ROI: firebaseSettings.ROI,
+        };
+      }
+      console.log("settings source", settings);
       dispatch(setSettings(settings));
       setIsLoading(false);
     })();

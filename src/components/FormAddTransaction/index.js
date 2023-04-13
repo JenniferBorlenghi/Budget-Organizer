@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { categoryOptions } from "../../includes/categories";
-import { v4 as uuidv4 } from "uuid";
 import { addTransaction } from "../../redux/transactionSlice";
 import { useDispatch } from "react-redux";
 import "./styles.scss";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import * as database from "./../../database";
+import ProcessingDB from "../ProcessingDB";
 
 export default function FormAddTransaction() {
   const dispatch = useDispatch();
@@ -15,8 +16,9 @@ export default function FormAddTransaction() {
   const [date, setDate] = useState("");
   const [errorMessage, setErrorMessage] = useState([]);
   const [sucessMessage, setSucessMessage] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setSucessMessage("");
@@ -44,17 +46,40 @@ export default function FormAddTransaction() {
     setErrorMessage(newErrorMessages);
 
     if (newErrorMessages.length === 0) {
-      const id = uuidv4();
-      const data = { id, description, category, amount, date };
-      dispatch(addTransaction(data));
-      setErrorMessage("");
-      setSucessMessage("Transaction added successfully!");
-      setDescription("");
-      setCategory("");
-      setAmount("");
-      setDate("");
+      setIsSaving(true);
+
+      const data = { description, category, amount, date };
+      // update server/db
+      const savedTransactionId = await database.save(data);
+
+      // if the addition in the dabatase, update the frontend
+      if (savedTransactionId) {
+        const dataWithNewId = {
+          id: savedTransactionId,
+          ...data,
+        };
+
+        // update the UI
+        dispatch(addTransaction(dataWithNewId));
+
+        setIsSaving(false);
+
+        setErrorMessage("");
+        setSucessMessage("Transaction added successfully!");
+        setDescription("");
+        setCategory("");
+        setAmount("");
+        setDate("");
+      } else {
+        setIsSaving(false);
+        setErrorMessage(["Failed to add the task!"]);
+      }
     }
   };
+
+  if (isSaving) {
+    return <ProcessingDB message="Saving..." />;
+  }
 
   return (
     <div className="form-transaction-comp">

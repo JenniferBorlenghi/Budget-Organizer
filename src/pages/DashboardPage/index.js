@@ -14,6 +14,7 @@ export default function DashboardPage() {
   const currentYear = currentDate.getFullYear();
 
   const transactions = useSelector((state) => state.transaction.transactions);
+
   const yearsWithTransactions = getYearsInDB(transactions);
 
   const filterYearAndMonth = (yearToFilter, monthToFilter) => {

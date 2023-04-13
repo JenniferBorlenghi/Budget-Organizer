@@ -1,9 +1,11 @@
 import { categoryOptions } from "../../includes/categories";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSettings } from "../../redux/settingsSlice";
+import { updateSettings, setSettings } from "../../redux/settingsSlice";
 import "./styles.scss";
 import { AiFillEdit } from "react-icons/ai";
+import * as database from "./../../database";
+import ProcessingDB from "../ProcessingDB";
 
 export default function FormSettings() {
   const dispatch = useDispatch();
@@ -12,6 +14,8 @@ export default function FormSettings() {
   const [settings, setSettings] = useState(initialSettings);
   const [errorMessage, setErrorMessage] = useState([]);
   const [sucessMessage, setSucessMessage] = useState("");
+  const [errorsTitle, setErrorsTitle] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const handleSettingsChange = (e, categoryName) => {
     const newAmount = e.target.value;
@@ -19,7 +23,7 @@ export default function FormSettings() {
     setSettings(newSettings);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setSucessMessage("");
@@ -39,11 +43,33 @@ export default function FormSettings() {
     }
 
     setErrorMessage(newErrorMessages);
+    setErrorsTitle("Invalid data:");
 
     if (newErrorMessages.length === 0) {
+      setIsSaving(true);
       setErrorMessage("");
+      // update the interface right away
       dispatch(updateSettings(settings));
-      setSucessMessage("The settings were successfully updated!");
+
+      const settingsUpdated = await database.updateTransationSettings(
+        settings.id,
+        settings
+      );
+
+      if (!settingsUpdated) {
+        alert("Failed to update the settings.");
+        setErrorsTitle("Database error:");
+        setErrorMessage(["Failed to update the settings."]);
+        // reload from database the data unedited
+        const previousSettings = await database.loadTransactionsSettings();
+        // set it in the interface
+        dispatch(setSettings(previousSettings));
+        setIsSaving(false);
+      } else {
+        setErrorMessage("");
+        setSucessMessage("The settings were successfully updated!");
+        setIsSaving(false);
+      }
     }
   };
 
@@ -57,7 +83,6 @@ export default function FormSettings() {
             name={cat}
             onChange={(e) => handleSettingsChange(e, cat)}
             value={settings[cat]}
-            // placeholder={settings.cat}
             maxLength={8}
             required={true}
           />
@@ -66,12 +91,16 @@ export default function FormSettings() {
     );
   };
 
+  if (isSaving) {
+    return <ProcessingDB message="Saving..." />;
+  }
+
   return (
     <div className="settings-form">
       {errorMessage.length > 0 && (
         <div className="error-message">
           {" "}
-          <p>Invalid data:</p>
+          <p>{errorsTitle}</p>
           <ul>
             {errorMessage.map((error, index) => (
               <li key={index}>{error}</li>
