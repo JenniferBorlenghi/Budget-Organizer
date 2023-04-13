@@ -1,6 +1,10 @@
 import "./styles.scss";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { MdOutlineEditNote, MdOutlineCancel } from "react-icons/md";
+import {
+  AiFillEdit,
+  AiFillDelete,
+  AiFillCheckCircle,
+  AiFillCloseCircle,
+} from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeTransaction,
@@ -101,6 +105,10 @@ export default function Table() {
     }
   };
 
+  const handleCancelEdit = () => {
+    setTransactionToEdit("");
+  };
+
   const ViewMode = ({ transaction }) => {
     const amountClass = incomeTypes.includes(transaction.category)
       ? "income-amount"
@@ -179,9 +187,10 @@ export default function Table() {
             required={true}
           />
         </td>
-        <td className="action-save-column">
-          <div className="save-column">
+        <td>
+          <div className="action-edit-column">
             <button
+              className="save-button"
               onClick={() =>
                 handleUpdateTransaction(
                   transaction.id,
@@ -192,12 +201,11 @@ export default function Table() {
                 )
               }
             >
-              <MdOutlineEditNote />
-              <span>Save</span>
+              <AiFillCheckCircle />
             </button>
-            {/* <button>
-              <MdOutlineCancel />
-            </button> */}
+            <button onClick={handleCancelEdit} className="cancel-edit-button">
+              <AiFillCloseCircle />
+            </button>
           </div>
         </td>
       </tr>

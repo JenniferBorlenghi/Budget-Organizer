@@ -55,7 +55,11 @@
 
     .action-column {
       display: flex;
-      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0;
+      position: relative;
+      top: 8px;
 
       button {
         border: none;
@@ -78,31 +82,29 @@
         }
       }
     }
-  }
 
-  .action-save-column {
-    padding: 0;
-
-    .save-column {
+    .action-edit-column {
+      padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 0;
-      margin: 0 8px;
+      margin: 0;
       position: relative;
       top: 8px;
 
-      button {
+      .cancel-edit-button,
+      .save-button {
         border: none;
-        background-color: $secondary-color;
+        background-color: rgba(222, 235, 234, 1);
         cursor: pointer;
-        color: white;
+        color: $text-color;
         display: flex;
-        padding: 4px 12px;
-        border-radius: 8px;
+        row-gap: 4px;
+        padding: 4px 8px;
 
         svg {
-          font-size: 27px;
+          font-size: 28px;
         }
 
         span {
@@ -112,8 +114,12 @@
         }
 
         &:hover {
-          background-color: $success-color;
+          color: $success-color;
         }
+      }
+
+      .save-button {
+        margin-right: 13px;
       }
     }
   }
