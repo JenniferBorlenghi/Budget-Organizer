@@ -34,6 +34,7 @@ export default function DashboardPage() {
 
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
+  const [searchError, setSearchError] = useState("");
 
   const [transactionsToShow, setTransactionsToShow] =
     useState(currentTransactions);
@@ -41,11 +42,18 @@ export default function DashboardPage() {
   const handleFilterSubmit = (e) => {
     e.preventDefault();
 
-    setTransactionsToShow(filterYearAndMonth(year, month));
+    if (month !== "" || year !== "") {
+      setTransactionsToShow(filterYearAndMonth(year, month));
+      setSearchError("");
+    } else {
+      console.log("error");
+      setSearchError("All fields are required for the search!");
+    }
   };
 
   return (
     <PageContainer title="Dashboard" className="dashboard-page">
+      {searchError !== "" && <div className="search-error">{searchError}</div>}
       <form onSubmit={handleFilterSubmit}>
         <div className="month-filter">
           <label>

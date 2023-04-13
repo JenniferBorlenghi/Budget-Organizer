@@ -2,6 +2,11 @@
 
 main.page {
   .dashboard-page {
+    .search-error {
+      color: $danger-color;
+      margin-bottom: 10px;
+      margin-left: 20px;
+    }
     form {
       display: flex;
       justify-content: space-between;
@@ -12,6 +17,8 @@ main.page {
       button {
         @include save-button;
         width: 20%;
+
+        padding: 5px 10px;
       }
 
       margin-bottom: 20px;
@@ -24,6 +31,10 @@ main.page {
 
       svg {
         font-size: 25px;
+
+        @include breakpoint-large {
+          font-size: 30px;
+        }
       }
     }
   }
