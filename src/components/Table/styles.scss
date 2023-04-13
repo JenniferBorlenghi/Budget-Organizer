@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   margin: 20px;
+  overflow-x: auto;
 
   .error-message {
     color: $danger-color;
@@ -13,6 +14,7 @@
 
   table {
     text-align: center;
+
     th {
       background-color: $table-first-row-color;
       padding: 15px;
@@ -52,6 +54,9 @@
     }
 
     .action-column {
+      display: flex;
+      flex-direction: row;
+
       button {
         border: none;
         background-color: rgba(222, 235, 234, 1);

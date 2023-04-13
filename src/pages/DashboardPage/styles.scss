@@ -5,7 +5,7 @@ main.page {
     form {
       display: flex;
       justify-content: space-between;
-      margin: 15px;
+      margin: 20px;
 
       @include form-elements-style;
       flex-direction: row;

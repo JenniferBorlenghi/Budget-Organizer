@@ -105,7 +105,7 @@ export default function FormAddTransaction() {
           Description:
           <input
             type="text"
-            maxLength={50}
+            maxLength={15}
             placeholder="Enter a description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}

@@ -1,6 +1,6 @@
 import "./styles.scss";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import { MdOutlineEditNote } from "react-icons/md";
+import { MdOutlineEditNote, MdOutlineCancel } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeTransaction,
@@ -143,7 +143,7 @@ export default function Table() {
             type="text"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
-            maxLength={50}
+            maxLength={15}
             required={true}
           />
         </td>
@@ -195,6 +195,9 @@ export default function Table() {
               <MdOutlineEditNote />
               <span>Save</span>
             </button>
+            {/* <button>
+              <MdOutlineCancel />
+            </button> */}
           </div>
         </td>
       </tr>

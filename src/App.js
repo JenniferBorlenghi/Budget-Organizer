@@ -46,7 +46,7 @@ function App() {
           ROI: firebaseSettings.ROI,
         };
       }
-      console.log("settings source", settings);
+
       dispatch(setSettings(settings));
       setIsLoading(false);
     })();
