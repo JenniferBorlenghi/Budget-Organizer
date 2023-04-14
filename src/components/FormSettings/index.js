@@ -111,7 +111,7 @@ export default function FormSettings() {
 
       <form onSubmit={handleSubmit}>
         <p className="settings-definition">
-          Define the maximum amount to spend according to each category:
+          Define the maximum amount to spend/earn according to each category:
         </p>
         <div className="input-container">
           {categoryOptions.map((cat) => (
