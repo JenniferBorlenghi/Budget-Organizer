@@ -1,7 +1,7 @@
 import { categoryOptions } from "../../includes/categories";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSettings, setSettings } from "../../redux/settingsSlice";
+import { updateSettings } from "../../redux/settingsSlice";
 import "./styles.scss";
 import { AiFillEdit } from "react-icons/ai";
 import * as database from "./../../database";
@@ -60,10 +60,7 @@ export default function FormSettings() {
         alert("Failed to update the settings.");
         setErrorsTitle("Database error:");
         setErrorMessage(["Failed to update the settings."]);
-        // reload from database the data unedited
-        const previousSettings = await database.loadTransactionsSettings();
-        // set it in the interface
-        dispatch(setSettings(previousSettings));
+
         setIsSaving(false);
       } else {
         setErrorMessage("");
