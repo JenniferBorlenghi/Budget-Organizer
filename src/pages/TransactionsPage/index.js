@@ -23,7 +23,7 @@ export default function TransactionsPage() {
       <Table currentTransaction={false} />
 
       <h3>
-        Summary:{" "}
+        Total Summary:{" "}
         <span className={summaryClass}>{CADFormat.format(summary)}</span>
       </h3>
 
