@@ -16,6 +16,7 @@ https://share.vidyard.com/watch/b4KeNuFAXEm5LyjDrjHgk6
 - SCCS, CSS
 - Firebase Firestore
 - Vercel: budget-organizer.vercel.app/
+- Figma: https://www.figma.com/file/M1DRmfxxeW6BUEAVndvauP/JavaScript-4---Final-Project---jborlenghidebrito?node-id=0%3A1&t=odeHWlA7PWZuNWME-1
 
 ## Routes
 
