@@ -1,71 +1,64 @@
-# Getting Started with Create React App
+# Organize your bugdet!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An application that allows you to track your budget. Initially, you need to fill out how much you want to spend or earn in each transaction category: housing, utilities, transportation, groceries, personal, clothing, health, leasing, salary, and ROI (Return on Investments). The default values will be used if you do not fill out that.
+Then you can add, edit, and delete any transaction you have done. After any change, the summary and the dashboard information will be updated automatically.
+The dashboard summarizes the transactions by category using progress bars with different colours to let the user know if he would avoid spending in some section or focus on earning more in a category. Moreover, you can filter the month and year of your transactions on the dashboard page.
 
-## Available Scripts
+## Watch the presentation video
 
-In the project directory, you can run:
+This project was done for the Javascript 4 course from Web Development and Internet Applications course at Fanshawe College. That's mentioned in the video and the footer of the project.
 
-### `npm start`
+https://share.vidyard.com/watch/b4KeNuFAXEm5LyjDrjHgk6
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## What did I use to build this application?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React, React Icons, React Router Dom
+- SCCS, CSS
+- Firebase Firestore
+- Vercel: https://final-project-js4-jborlenghidebrito.vercel.app/
 
-### `npm test`
+## Routes
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. “/” to display the dashboard:
+   ![screenshot](./readme-files/home.png)
 
-### `npm run build`
+2. “/transactions” to show and edit transactions:
+   ![screenshot](./readme-files/transactions.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. “/transactions/add” to add a new transaction:
+   ![screenshot](./readme-files/newTransaction.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. “/settings” to update the amount to spend/earn in each transaction category:
+   ![screenshot](./readme-files/settings.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How to use
 
-### `npm run eject`
+1. Install the packages
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Start the applications
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# FinalProject_JS4
+```
+PROJECT_ROOT
+├── public
+├── readme-files
+├── src
+│   └── components          # React components
+│   └── database            # Firebase config and functions
+│   └── helperFunction
+│   └── includes
+│   └── pages
+│   └── redux
+│   └── styles              # SCSS styles
+│   └── App.js
+│   └── index.js
+```
