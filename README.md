@@ -15,7 +15,7 @@ https://share.vidyard.com/watch/b4KeNuFAXEm5LyjDrjHgk6
 - React, React Icons, React Router Dom
 - SCCS, CSS
 - Firebase Firestore
-- Vercel: https://final-project-js4-jborlenghidebrito.vercel.app/
+- Vercel: budget-organizer.vercel.app/
 
 ## Routes
 
@@ -30,6 +30,9 @@ https://share.vidyard.com/watch/b4KeNuFAXEm5LyjDrjHgk6
 
 4. “/settings” to update the amount to spend/earn in each transaction category:
    ![screenshot](./readme-files/settings.png)
+
+5. "\*" not found page:
+   ![screenshot](./readme-files/notFound.png)
 
 ## How to use
 
