@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDAbrBMdG-Je3FoUqNz7TqsuHKXAUIN6qM",
-  authDomain: "budget-organizer-11039.firebaseapp.com",
-  projectId: "budget-organizer-11039",
-  storageBucket: "budget-organizer-11039.appspot.com",
-  messagingSenderId: "174721444856",
-  appId: "1:174721444856:web:c60552ef0a6559049b440d",
+  apiKey: "AIzaSyBR8ireBdudmQLOV0tcealgSuIg_Whm9TM",
+  authDomain: "budget-portfolio.firebaseapp.com",
+  projectId: "budget-portfolio",
+  storageBucket: "budget-portfolio.appspot.com",
+  messagingSenderId: "296845566403",
+  appId: "1:296845566403:web:36633bc91faba5d71a5d76",
 };
 
 // Initialize Firebase
