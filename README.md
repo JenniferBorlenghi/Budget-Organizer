@@ -4,6 +4,8 @@ An application that allows you to track your budget. Initially, you need to fill
 Then you can add, edit, and delete any transaction you have done. After any change, the summary and the dashboard information will be updated automatically.
 The dashboard summarizes the transactions by category using progress bars with different colours to let the user know if he would avoid spending in some section or focus on earning more in a category. Moreover, you can filter the month and year of your transactions on the dashboard page.
 
+![Alt Text](./readme-files/budget-example.gif)
+
 ## Watch the presentation video
 
 This project was done for the Javascript 4 course from Web Development and Internet Applications course at Fanshawe College. That's mentioned in the video and the footer of the project.
